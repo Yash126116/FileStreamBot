@@ -31,11 +31,10 @@ class Server:
     BIND_ADDRESS = "0.0.0.0"
     PING_INTERVAL = int(env.get("PING_INTERVAL", "1200"))
     HAS_SSL = str(env.get("HAS_SSL", "0").lower()) in ("1", "true", "t", "yes", "y")
-    NO_PORT = str(env.get("NO_PORT", "0").lower()) in ("1", "true", "t", "yes", "y")
-    FQDN = str(env.get("FQDN", "filetogwye-67556444e345.herokuapp.com"))  # Ensure the domain is a string
+    NO_PORT = True  # Explicitly set NO_PORT to True to avoid adding port in the URL
+    FQDN = str(env.get("FQDN", "filetogwye-67556444e345.herokuapp.com"))
     URL = "http{}://{}{}/".format(
         "s" if HAS_SSL else "",
         FQDN,
         "" if NO_PORT else ":" + str(PORT)
     )
-
