@@ -19,7 +19,7 @@ class Telegram:
     FILE_PIC = env.get('FILE_PIC', "https://graph.org/file/5bb9935be0229adf98b73.jpg")
     START_PIC = env.get('START_PIC', "https://graph.org/file/290af25276fa34fa8f0aa.jpg")
     VERIFY_PIC = env.get('VERIFY_PIC', "https://graph.org/file/736e21cc0efa4d8c2a0e4.jpg")
-    MULTI_CLIENT = False
+    MULTI_CLIENT = True
     FLOG_CHANNEL = int(env.get("FLOG_CHANNEL", None))   # Logs channel for file logs
     ULOG_CHANNEL = int(env.get("ULOG_CHANNEL", None))   # Logs channel for user logs
     MODE = env.get("MODE", "primary")
@@ -33,20 +33,7 @@ class Server:
     HAS_SSL = str(env.get("HAS_SSL", "0").lower()) in ("1", "true", "t", "yes", "y")
     NO_PORT = True  # Explicitly set NO_PORT to True to avoid adding port in the URL
     FQDN = str(env.get("FQDN", "filetogwye-67556444e345.herokuapp.com"))
-    URL = "http{}://{}{}/".format(
-        "s" if HAS_SSL else "",
-        FQDN,
-        "" if NO_PORT else ":" + str(PORT)
-    )
-
-class Server:
-    PORT = int(env.get("PORT", 8080))
-    BIND_ADDRESS = "0.0.0.0"
-    PING_INTERVAL = int(env.get("PING_INTERVAL", "1200"))
-    HAS_SSL = str(env.get("HAS_SSL", "0").lower()) in ("1", "true", "t", "yes", "y")
-    NO_PORT = True  # Explicitly set NO_PORT to True to avoid adding port in the URL
-    FQDN = str(env.get("FQDN", "filetogwye-67556444e345.herokuapp.com"))
-    URL = "http{}://{}{}/".format(
+    URL = "https{}://{}{}/".format(
         "s" if HAS_SSL else "",
         FQDN,
         "" if NO_PORT else ":" + str(PORT)
