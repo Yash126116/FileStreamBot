@@ -32,7 +32,7 @@ class Server:
     PING_INTERVAL = int(env.get("PING_INTERVAL", "1200"))
     HAS_SSL = str(env.get("HAS_SSL", "0").lower()) in ("1", "true", "t", "yes", "y")
     NO_PORT = True  # Explicitly set NO_PORT to True to avoid adding port in the URL
-    FQDN = str(env.get("FQDN", "filetogwye-67556444e345.herokuapp.com"))
+    FQDN = str(env.get("FQDN", "filetolinkcs-0bf8927258c0.herokuapp.com"))
     URL = "https{}://{}{}/".format(
         "s" if HAS_SSL else "",
         FQDN,
