@@ -14,6 +14,36 @@ import asyncio
 
 db = Database(Telegram.DATABASE_URL, Telegram.SESSION_NAME)
 
+async def verify_user(bot, message):
+    user_id = message.from_user.id
+    logging.debug(f"Verifying user with ID: {user_id}")
+
+    # Check if user is authorized
+    if not await is_user_authorized(message):
+        logging.debug(f"User {user_id} is not authorized")
+        return False
+    logging.debug(f"User {user_id} is authorized")
+
+    # Check if user is banned
+    if await is_user_banned(message):
+        logging.debug(f"User {user_id} is banned")
+        return False
+    logging.debug(f"User {user_id} is not banned")
+
+    # Ensure user exists in the database
+    await is_user_exist(bot, message)
+    logging.debug(f"User {user_id} exists in the database")
+
+    # Check if the user is subscribed to the required channel
+    if Telegram.FORCE_SUB:
+        if not await is_user_joined(bot, message):
+            logging.debug(f"User {user_id} has not joined the required channel")
+            return False
+    logging.debug(f"User {user_id} has joined the required channel (if applicable)")
+
+    logging.debug(f"User {user_id} verification successful")
+    return True
+
 @FileStream.on_message(filters.command('start') & filters.private)
 async def start(bot: Client, message: Message):
     if not await verify_user(bot, message):
